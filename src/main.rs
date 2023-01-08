@@ -1,24 +1,52 @@
 use rand::Rng;
 use std::io::{self, stdout, Write};
-const MAX_ATTEMPTS: u32 = 5; // maximum number of attempts allowed
+const MAX_ATTEMPTS: u32 = 99; // maximum number of attempts allowed
 fn main() {
-    let language =
-        get_response("Choose a language: English or Spanish\nElige un idioma: Inglés o Español");
-    if language == "english" || language == "inglés" || language == "en" || language == "i" {
-        english();
-    } else if language == "spanish" || language == "español" || language == "es" || language == "s"
-    {
-        spanish();
-    } else {
-        println!("Invalid language. Please enter a valid language\nIdioma inválido. Por favor ingrese un idioma válido");
+    language();
+}
+fn language() {
+    loop {
+        let language = get_response(
+            "Choose a language: English or Spanish\nElige un idioma: Inglés o Español",
+        );
+        let valid_english: Vec<String> = vec![
+            "english".to_string(),
+            "eng".to_string(),
+            "inglés".to_string(),
+            "ingles".to_string(),
+            "ing".to_string(),
+            "en".to_string(),
+            "i".to_string(),
+        ];
+        let valid_spanish = vec![
+            "spanish".to_string(),
+            "spa".to_string(),
+            "español".to_string(),
+            "espanol".to_string(),
+            "esp".to_string(),
+            "es".to_string(),
+            "s".to_string(),
+        ];
+        if valid_english.contains(&language) {
+            english();
+            continue;
+        } else if valid_spanish.contains(&language) {
+            spanish();
+            continue;
+        } else {
+            println!("Invalid language. Please enter a valid language\nIdioma inválido. Por favor ingrese un idioma válido");
+        }
     }
 }
 
 fn english() {
+    println!("You have chosen English");
+    print!("\x1B[2J\x1B[1;1H");
+    println!("Guess the secret number!");
     let mut secret = rand::thread_rng().gen_range(1..100);
     let mut attempts = 0; // counter for the number of attempts made
     loop {
-        println!("{secret}");
+        //println!("{secret}");
         let guess: u32 = get_guess("Guess: ");
         if guess == 0 {
             print!("\x1B[2J\x1B[1;1H");
@@ -62,14 +90,17 @@ fn english() {
     }
 }
 fn spanish() {
+    println!("Has elegido Español");
+    print!("\x1B[2J\x1B[1;1H");
+    println!("Adivina el número secreto!");
     let mut secret = rand::thread_rng().gen_range(1..100);
     let mut attempts = 0; // counter for the number of attempts made
     loop {
-        println!("{secret}");
+        //println!("{secret}");
         let guess: u32 = get_guess("Adivina: ");
         if guess == 0 {
             print!("\x1B[2J\x1B[1;1H");
-            println!("debe ser un entero no cero");
+            println!("Debe ser un entero no cero");
             continue;
         }
         if attempts > MAX_ATTEMPTS - 1 {
