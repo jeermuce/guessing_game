@@ -7,3 +7,16 @@ edition = "2021"
 
 [dependencies]
 rand = "0.8.5"
+ansi-escapes = "0.1.1"
+
+[profile.dev]
+opt-level = "z"
+debug = false
+ # Platform-specific.
+debug-assertions = false
+overflow-checks = false
+lto = false
+panic = 'unwind'
+incremental = true
+codegen-units = 1
+rpath = false
