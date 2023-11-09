@@ -8,6 +8,10 @@ const MAX_RANGE: u32 = 100;
 macro_rules! game {
     ($lang:expr) => {
         match $lang {
+            0 => {
+                println!("Thanks for playing!");
+                break;
+            }
             1 => english(),
             2 => spanish(),
             3 => german(),
@@ -22,12 +26,14 @@ fn main() {
     loop {
         let language: u16 = get_response(
             "
+Quit/Salir/Beenden/終了/종료/Exit:____0: Quit
 Choose a language:____________________1: English
 Elija un idioma:______________________2: Español     
 Wählen Sie eine Sprache aus:__________3: Deutsch
 言語を選択してください:_______________4: 日本語
 언어를 선택하십시오:__________________5: 한국어
 Linguam eligite:______________________6: Lingua latina
+
 ",
         )
         .parse()
